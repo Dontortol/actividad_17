@@ -36,5 +36,26 @@ def add_game():
     gamu = Game(game_id, name, description, price)
     games.append(gamu)
 
-    gamu.info()
-add_game()
+def show_games():
+    if not games:
+        print("Aun no tienes juegos en la biblioteca")
+    else:
+        print("----Biblioteca----")
+        i = 1
+        for gamu in games:
+            print(f"Libro {i}:", end="")
+            gamu.info()
+            i += 1
+        print()
+
+def delete_game():
+    if not games:
+        print("Aun no tienes juegos en la biblioteca")
+    else:
+        search_game = input("Ingresa el ID del juego: ").upper()
+        for gamu in games:
+            if gamu.id == search_game:
+                games.remove(gamu)
+                print("Se ha eliminado el juego de la biblioteca")
+                break
+
