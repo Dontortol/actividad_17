@@ -59,3 +59,48 @@ def delete_game():
                 print("Se ha eliminado el juego de la biblioteca")
                 break
 
+def order_games():
+    if not games:
+        print("Aun no tienes juegos en la biblioteca")
+    else:
+        games.sort()
+        print(games)
+
+class User:
+    def __init__(self, name, password):
+        self.name = name
+        self.password = password
+
+users = []
+def add_user():
+    print("--Registro de usuario--")
+    user_name = input("Ingresa el nombre del usuario: ")
+    password = input("Crea una contraseña: ")
+    usr = User(user_name, password)
+    users.append(usr)
+
+
+def money():
+    print("Comprobacion antes de pagar")
+    user_name = input("Ingresa el nombre del usuario: ")
+    if user_name not in users:
+        print("No se ha encontrado el nombre usuario")
+    else:
+        password = input("Ingrese la contraseña")
+        if password not in users:
+            print("Contraseña incorrecta, intente de nuebo")
+        else:
+            while True:
+                try:
+                    cash = int(input("Ingresa la cantidad de dinero que quiere ingresar a la cuenta: "))
+                    if cash <= 0:
+                        print("No se pueden ingresar numeros negativos a la cuenta")
+                    else:
+                        users.append(cash)
+                        break
+                except ValueError:
+                    print("Debe ser un numero entero")
+                except Exception as e:
+                    print("Ocurrio un error inesperado", e)
+                finally:
+                    print("Se ha finalizado la transaccion")
