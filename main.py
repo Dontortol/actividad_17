@@ -4,6 +4,10 @@ class User:
         self.name = name
         self.password = password
 
+    def user_info(self):
+        print(self.name)
+        print(self.password)
+
 users = []
 def add_user():
     print("--Registro de usuario--")
@@ -61,7 +65,9 @@ class Game:
 
 games = []
 def add_game():
+    suma = sum(wallet) + 0
     print("Ingresar un nuevo juego")
+    print(f"> Tienes: ${suma}")
     while True:
         game_id = input("Ingresa el ID del juego: ").upper()
         if game_id not in games:
@@ -73,7 +79,18 @@ def add_game():
     while True:
         try:
             price = int(input("Ingresa el precio del juego en dolares: "))
-            break
+            if price <= 0:
+                print("Debe ser un valor mayor a 0")
+            if price > suma:
+                print("No tienes los fondos suficeintes para comprar el juego")
+                break
+            if price >= 0 and price <= suma:
+                print("Gracias por tu compra")
+                rest = sum(wallet) - price
+                wallet.remove(suma)
+                wallet.append(rest)
+                break
+
         except ValueError:
             print("Debe ser un numero entero")
         except Exception as e:
@@ -120,10 +137,17 @@ while True:
     print("----Rodrigos Games----\n"
           "1. Ingresar dinero a la cuenta\n"
           "2. Agregar juego\n"
-          "3.")
+          "3. Ver datos de la cuenta")
     select_op = input("Ingrese una de las siguientes opciones: ")
     match select_op:
         case "1":
             money()
         case "2":
-            add_game()
+            if not wallet:
+                print("No tienes dinero para comprar")
+            else:
+                add_game()
+        case "3":
+            print("Datos de la cuenta")
+            use
+            print("Tienes en la billetera: ",sum(wallet))
