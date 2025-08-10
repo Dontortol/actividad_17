@@ -5,13 +5,13 @@ class User:
         self.password = password
 
     def user_info(self):
-        print(self.name)
-        print(self.password)
+        print("Nombre de usuario:",self.name)
+        print("Contraseña",self.password)
 
 users = []
 def add_user():
     print("--Registro de usuario--")
-    user_name = input("Ingresa el nombre del usuario: ")
+    user_name = input("Ingresa el nombre del usuario: ").lower()
     password = input("Crea una contraseña: ")
     usr = User(user_name, password)
     users.append(usr)
@@ -21,7 +21,7 @@ def money():
     print("Comprobacion antes de pagar")
     for usr in users:
         while True:
-            user_name = input("Ingresa el nombre del usuario: ")
+            user_name = input("Ingresa el nombre del usuario: ").lower()
             if usr.name == user_name:
                 break
             else:
@@ -40,6 +40,7 @@ def money():
             if cash <= 0:
                 print("No se pueden ingresar numeros negativos a la cuenta")
             else:
+                sum(wallet) + cash
                 wallet.append(cash)
                 break
             break
@@ -74,7 +75,7 @@ def add_game():
             break
         else:
             print("Ya existe esta ID")
-    name = input("Ingresa el nombre del juego: ").lower().capitalize()
+    name = input("Ingresa el nombre del juego: ").lower()
     description = input("Ingres la descripcion del juego: ").lower()
     while True:
         try:
@@ -128,6 +129,18 @@ def order_games():
         games.sort()
         print(games)
 
+def searc_games():
+    if not games:
+        print("Aun no tienes juegos en la biblioteca")
+    else:
+        for i in games:
+            while True:
+                search =input("Ingresa el ID del juego: ").upper()
+                if i.id == search:
+                    i.info()
+                    break
+                else:
+                    print("No se encontro el juego, intenta de nuevo")
 
 
 
@@ -137,7 +150,11 @@ while True:
     print("----Rodrigos Games----\n"
           "1. Ingresar dinero a la cuenta\n"
           "2. Agregar juego\n"
-          "3. Ver datos de la cuenta")
+          "3. Ver biblioteca\n"
+          "4. Eliminar juego\n"
+          "5. Buscar juego\n"
+          "6. Ver datos de la cuenta\n"
+          "7. Salir")
     select_op = input("Ingrese una de las siguientes opciones: ")
     match select_op:
         case "1":
@@ -148,6 +165,27 @@ while True:
             else:
                 add_game()
         case "3":
-            print("Datos de la cuenta")
-            use
-            print("Tienes en la billetera: ",sum(wallet))
+            while True:
+                print("1. Ver bilbioteca\n"
+                      "2. Ver en orden alfabetico\n"
+                      "3. Regresar al menu")
+                select = input("Ingrese una de las siguientes opciones: ")
+                match select:
+                    case "1":
+                        show_games()
+                    case "2":
+                        order_games()
+                    case "3":
+                        print("Regresando al menu")
+                        break
+        case "4":
+            delete_game()
+        case "5":
+            searc_games()
+        case "6":
+            print("--Datos de la cuenta--")
+            for info in users:
+                print(info.user_info())
+            print("Tienes en la billetera: $",sum(wallet))
+        case "7":
+            print("Cerrando Rodrigos Games")
