@@ -1,4 +1,4 @@
-# Un programa para libreria de juegos
+# Un programa para libreria de juegos dia de creacion 9
 class User:
     def __init__(self, name, password):
         self.name = name
@@ -36,14 +36,13 @@ def money():
                 break
     while True:
         try:
-            cash = int(input("Ingresa la cantidad de dinero que quiere ingresar a la cuenta: "))
+            cash = int(input("Ingresa la cantidad de pelucholares que quiere ingresar a la cuenta: "))
             if cash <= 0:
                 print("No se pueden ingresar numeros negativos a la cuenta")
             else:
                 sum(wallet) + cash
                 wallet.append(cash)
                 break
-            break
 
         except ValueError:
             print("Debe ser un numero entero")
@@ -53,14 +52,14 @@ def money():
 
 class Game:
     def __init__(self, game_id, name, description, price):
-        self.id = game_id
+        self.game_id = game_id
         self.name = name
         self.description = description
         self.price = price
 
     def info(self):
         print(f"\n--{self.name}--")
-        print(f"ID del juego: {self.id}\n"
+        print(f"ID del juego: {self.game_id}\n"
               f"Precio del juego: Q.{self.price}\n"
               f"Descripcion del juego: {self.description}")
 
@@ -70,34 +69,37 @@ def add_game():
     print("Ingresar un nuevo juego")
     print(f"> Tienes: ${suma}")
     while True:
-        game_id = input("Ingresa el ID del juego: ").upper()
-        if game_id not in games:
+        gamid = input("Ingresa el ID del juego: ").upper()
+        for a in games:
+            if a.game_id == gamid:
+                print("El ID ya existe")
+                gamid = None
+                break
+        if gamid != None:
             break
-        else:
-            print("Ya existe esta ID")
     name = input("Ingresa el nombre del juego: ").lower()
     description = input("Ingres la descripcion del juego: ").lower()
     while True:
         try:
-            price = int(input("Ingresa el precio del juego en dolares: "))
+            price = int(input("Ingresa el precio del juego en pelucholares: "))
             if price <= 0:
                 print("Debe ser un valor mayor a 0")
-            if price > suma:
+            elif price > suma:
                 print("No tienes los fondos suficeintes para comprar el juego")
                 break
-            if price >= 0 and price <= suma:
-                print("Gracias por tu compra")
+            else:
+                print("Gracias por tu compra", wallet)
                 rest = sum(wallet) - price
-                wallet.remove(suma)
+                wallet.clear()
                 wallet.append(rest)
+                gamu = Game(gamid, name, description, price)
+                games.append(gamu)
                 break
 
         except ValueError:
             print("Debe ser un numero entero")
         except Exception as e:
             print("Ocurrio un error inesperado", e)
-    gamu = Game(game_id, name, description, price)
-    games.append(gamu)
 
 def show_games():
     if not games:
@@ -106,7 +108,7 @@ def show_games():
         print("----Biblioteca----")
         i = 1
         for gamu in games:
-            print(f"Libro {i}:", end="")
+            print(f"Juego {i}:", end="")
             gamu.info()
             i += 1
         print()
@@ -115,33 +117,71 @@ def delete_game():
     if not games:
         print("Aun no tienes juegos en la biblioteca")
     else:
-        search_game = input("Ingresa el ID del juego: ").upper()
-        for gamu in games:
-            if gamu.id == search_game:
-                games.remove(gamu)
-                print("Se ha eliminado el juego de la biblioteca")
+        while True:
+            gamu = input("Ingresa el ID del juego: ").upper()
+            for a in games:
+                if a.game_id == gamu:
+                    games.remove(a)
+                    print("Se ha eliminado el juego de la biblioteca")
+                    break
+            else:
+                gamu = None
+            if gamu != None:
                 break
+            else:
+                print("El juego no se ha encontrado en la biblioteca")
+
+
+
+def get_name(e):
+    return e.name
 
 def order_games():
     if not games:
         print("Aun no tienes juegos en la biblioteca")
     else:
-        games.sort()
+        games.sort(key=get_name)
         print(games)
 
 def searc_games():
     if not games:
         print("Aun no tienes juegos en la biblioteca")
     else:
-        for i in games:
-            while True:
-                search =input("Ingresa el ID del juego: ").upper()
-                if i.id == search:
-                    i.info()
+        while True:
+            gamu = input("Ingresa el ID del juego: ").upper()
+            for a in games:
+                if a.game_id == gamu:
+                    a.info()
                     break
-                else:
-                    print("No se encontro el juego, intenta de nuevo")
+            else:
+                gamu = None
+            if gamu != None:
+                break
+            else:
+                print("El juego no se ha encontrado en la biblioteca")
 
+
+def secret():
+        print("""       
+                ⢀⡴⠑⡄⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ 
+                ⠸⡇⠀⠿⡀⠀⠀⠀⣀⡴⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀ 
+                ⠀⠀⠀⠀⠑⢄⣠⠾⠁⣀⣄⡈⠙⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀ 
+                ⠀⠀⠀⠀⢀⡀⠁⠀⠀⠈⠙⠛⠂⠈⣿⣿⣿⣿⣿⠿⡿⢿⣆⠀⠀⠀⠀⠀⠀⠀ 
+                ⠀⠀⠀⢀⡾⣁⣀⠀⠴⠂⠙⣗⡀⠀⢻⣿⣿⠭⢤⣴⣦⣤⣹⠀⠀⠀⢀⢴⣶⣆ 
+                ⠀⠀⢀⣾⣿⣿⣿⣷⣮⣽⣾⣿⣥⣴⣿⣿⡿⢂⠔⢚⡿⢿⣿⣦⣴⣾⠁⠸⣼⡿ 
+                ⠀⢀⡞⠁⠙⠻⠿⠟⠉⠀⠛⢹⣿⣿⣿⣿⣿⣌⢤⣼⣿⣾⣿⡟⠉⠀⠀⠀⠀⠀ 
+                ⠀⣾⣷⣶⠇⠀⠀⣤⣄⣀⡀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀ 
+                ⠀⠉⠈⠉⠀⠀⢦⡈⢻⣿⣿⣿⣶⣶⣶⣶⣤⣽⡹⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀ 
+                ⠀⠀⠀⠀⠀⠀⠀⠉⠲⣽⡻⢿⣿⣿⣿⣿⣿⣿⣷⣜⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀ 
+                ⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣶⣮⣭⣽⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀ 
+                ⠀⠀⠀⠀⠀⠀⣀⣀⣈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀ 
+                ⠀⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀ 
+                ⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀ 
+                ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠿⠛⠉
+                Has encontrado el secreto de mi biblioteca
+                felicidades. Soy el creador de este programa
+    
+    """)
 
 
 print("Bienvenido a Rodrigos Games, Tienda virtual de videojuegos")
@@ -154,7 +194,8 @@ while True:
           "4. Eliminar juego\n"
           "5. Buscar juego\n"
           "6. Ver datos de la cuenta\n"
-          "7. Salir")
+          "7. Salir\n"
+          "jijijiji dia mas 10")
     select_op = input("Ingrese una de las siguientes opciones: ")
     match select_op:
         case "1":
@@ -165,19 +206,22 @@ while True:
             else:
                 add_game()
         case "3":
-            while True:
-                print("1. Ver bilbioteca\n"
-                      "2. Ver en orden alfabetico\n"
-                      "3. Regresar al menu")
-                select = input("Ingrese una de las siguientes opciones: ")
-                match select:
-                    case "1":
-                        show_games()
-                    case "2":
-                        order_games()
-                    case "3":
-                        print("Regresando al menu")
-                        break
+            if not games:
+                print("No tienes juegos en la biblioteca")
+            else:
+                while True:
+                    print("1. Ver bilbioteca\n"
+                          "2. Ver en orden alfabetico\n"
+                          "3. Regresar al menu")
+                    select = input("Ingrese una de las siguientes opciones: ")
+                    match select:
+                        case "1":
+                            show_games()
+                        case "2":
+                            order_games()
+                        case "3":
+                            print("Regresando al menu")
+                            break
         case "4":
             delete_game()
         case "5":
@@ -189,3 +233,16 @@ while True:
             print("Tienes en la billetera: $",sum(wallet))
         case "7":
             print("Cerrando Rodrigos Games")
+            break
+        case "19":
+            print("Bienvenido a la sala secreta")
+            choose = input("Estas seguro que quieres conocer al jefe???? si/no: ").lower()
+            match choose:
+                case "si":
+                    secret()
+                case "no":
+                    print("Regresando al menu")
+                case _:
+                    print("Debe ser dentro de las opciones")
+        case _:
+            print('Ingrese una opcion dentro del rango')
