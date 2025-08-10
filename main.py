@@ -1,4 +1,49 @@
 # Un programa para libreria de juegos
+class User:
+    def __init__(self, name, password):
+        self.name = name
+        self.password = password
+
+users = []
+def add_user():
+    print("--Registro de usuario--")
+    user_name = input("Ingresa el nombre del usuario: ")
+    password = input("Crea una contraseña: ")
+    usr = User(user_name, password)
+    users.append(usr)
+
+wallet = []
+def money():
+    print("Comprobacion antes de pagar")
+    for usr in users:
+        while True:
+            user_name = input("Ingresa el nombre del usuario: ")
+            if usr.name == user_name:
+                break
+            else:
+                print("El usuario no existe")
+
+    for passw in users:
+        while True:
+            password = input("Ingrese la contraseña: ")
+            if passw.password != password:
+                print("Contraseña incorrecta, intente de nuevo")
+            else:
+                break
+    while True:
+        try:
+            cash = int(input("Ingresa la cantidad de dinero que quiere ingresar a la cuenta: "))
+            if cash <= 0:
+                print("No se pueden ingresar numeros negativos a la cuenta")
+            else:
+                wallet.append(cash)
+                break
+            break
+
+        except ValueError:
+            print("Debe ser un numero entero")
+        except Exception as e:
+            print("Ocurrio un error inesperado", e)
 
 
 class Game:
@@ -66,41 +111,19 @@ def order_games():
         games.sort()
         print(games)
 
-class User:
-    def __init__(self, name, password):
-        self.name = name
-        self.password = password
-
-users = []
-def add_user():
-    print("--Registro de usuario--")
-    user_name = input("Ingresa el nombre del usuario: ")
-    password = input("Crea una contraseña: ")
-    usr = User(user_name, password)
-    users.append(usr)
 
 
-def money():
-    print("Comprobacion antes de pagar")
-    user_name = input("Ingresa el nombre del usuario: ")
-    if user_name not in users:
-        print("No se ha encontrado el nombre usuario")
-    else:
-        password = input("Ingrese la contraseña")
-        if password not in users:
-            print("Contraseña incorrecta, intente de nuebo")
-        else:
-            while True:
-                try:
-                    cash = int(input("Ingresa la cantidad de dinero que quiere ingresar a la cuenta: "))
-                    if cash <= 0:
-                        print("No se pueden ingresar numeros negativos a la cuenta")
-                    else:
-                        users.append(cash)
-                        break
-                except ValueError:
-                    print("Debe ser un numero entero")
-                except Exception as e:
-                    print("Ocurrio un error inesperado", e)
-                finally:
-                    print("Se ha finalizado la transaccion")
+
+print("Bienvenido a Rodrigos Games, Tienda virtual de videojuegos")
+add_user()
+while True:
+    print("----Rodrigos Games----\n"
+          "1. Ingresar dinero a la cuenta\n"
+          "2. Agregar juego\n"
+          "3.")
+    select_op = input("Ingrese una de las siguientes opciones: ")
+    match select_op:
+        case "1":
+            money()
+        case "2":
+            add_game()
